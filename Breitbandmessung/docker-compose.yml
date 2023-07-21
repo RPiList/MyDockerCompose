@@ -1,12 +1,13 @@
-version: '3.8'
+version: "3.8"
 services:
   breitband-desktop:
     image: breitband:latest
+    build: https://github.com/fabianbees/breitbandmessung-docker.git
     container_name: breitband-desktop
-    ports:
-      - "5800:5800"
-    volumes:
-      - "$PWD/breitbandmessung/data:/config/xdg/config/Breitbandmessung"
     environment:
       - TZ=Europe/Berlin
-    restart: always
+    volumes:
+      - /volume1/docker/breitbandmessung/data:/config/xdg/config/Breitbandmessung
+    ports:
+      - 5800:5800
+    restart: unless-stopped
