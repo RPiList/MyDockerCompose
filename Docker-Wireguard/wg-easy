@@ -24,7 +24,7 @@ services:
       - /volume1/docker/wireguard/Config:/etc/wireguard
     ports:
       - "51844:51820/udp"
-      - "51821:51821/tcp"
+      - "127.0.0.1:51821:51821/tcp"
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
