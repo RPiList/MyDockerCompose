@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+    tailscale:
+        container_name: tailscaled
+        volumes:
+            - /var/lib:/var/lib
+            - /dev/net/tun:/dev/net/tun
+        network_mode: host
+        environment:
+            - TS_AUTHKEY=<YOUR_KEY_HERE>
+        image: tailscale/tailscale
