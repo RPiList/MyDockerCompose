@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    restart: always
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      # DNS over HTTPs
+      #- "443:443/tcp"
+      # DNS over TLS
+      #- "853:853/tcp"
+      # DNS over QUIC
+      #- "784:784/udp"
+      # DNS Crypt
+      #- "5443:5443/tcp"
+      #- "5443:5443/udp"
+      # DHCP Ports
+      #- "67:67/udp"
+      #- "68:68/tcp"
+      #- "68:68/udp"
+      # Dashboard
+      - "3000:3000/tcp"
+      - "8080:80/tcp"
+    environment:
+      TZ: Europe/Berlin
+    volumes:
+      - "/volume1/docker/adguardhome/workdir:/opt/adguardhome/work"
+      - "/volume1/docker/adguardhome/confdir:/opt/adguardhome/conf"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - app-nw
+
+networks:
+  app-nw:
+    internal: false
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-adguard

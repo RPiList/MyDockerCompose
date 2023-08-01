@@ -1,0 +1,50 @@
+version: "2.1"
+services:
+  mariadb:
+    image: linuxserver/mariadb:latest
+    #container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=bitnami
+      - TZ=Europe/Berlin
+      - MYSQL_DATABASE=db-owncloud #optional
+      - MYSQL_USER=db-owncloud #optional
+      - MYSQL_PASSWORD=db-owncloud1234 #optional
+      #- REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - /volume1/docker/owncloud/mariadb/config:/config
+    #ports:
+    #  - 3306:3306
+    restart: always
+  owncloud:
+    image: owncloud/server:latest
+    #container_name: owncloud_server
+    restart: always
+    ports:
+      - 8080:8080
+      - 8443:8443
+    depends_on:
+      - mariadb
+      #- redis
+    environment:
+      - OWNCLOUD_DOMAIN=localhost
+      - OWNCLOUD_DB_TYPE=mysql
+      - OWNCLOUD_DB_NAME=db-owncloud
+      - OWNCLOUD_DB_USERNAME=db-owncloud
+      - OWNCLOUD_DB_PASSWORD=db-owncloud1234
+      - OWNCLOUD_DB_HOST=mariadb
+      - OWNCLOUD_ADMIN_USERNAME=admin
+      - OWNCLOUD_ADMIN_PASSWORD=admin
+      - OWNCLOUD_MYSQL_UTF8MB4=true
+      #- OWNCLOUD_REDIS_ENABLED=true
+      #- OWNCLOUD_REDIS_HOST=redis
+    #healthcheck:
+    #  test: ["CMD", "/usr/bin/healthcheck"]
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 5
+    volumes:
+      - /volume1/docker/owncloud/data:/mnt/data
+
+
