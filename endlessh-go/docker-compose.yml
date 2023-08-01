@@ -1,0 +1,60 @@
+version: '3.5'
+services:
+
+  endlessh:
+    container_name: endlessh
+    image: shizunge/endlessh-go:latest
+    restart: always
+    command:
+      - -interval_ms=1000
+      - -logtostderr
+      - -v=1
+      - -enable_prometheus
+      - -geoip_supplier=ip-api
+    networks:
+      - example_network
+    ports:
+      - 2222:2222 # SSH port
+      - 127.0.0.1:2112:2112 # Prometheus metrics port
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=45d
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --web.enable-admin-api
+    networks:
+      - example_network
+    ports:
+      - 127.0.0.1:9090:9090
+    volumes:
+      - /volume1/docker/endlessh-go/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    networks:
+      - example_network
+    ports:
+      - 127.0.0.1:3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=examples
+      - GF_SECURITY_ADMIN_PASSWORD=examples
+    volumes:
+      - grafana_var:/var/lib/grafana/
+      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/prometheus.yml
+
+networks:
+  example_network:
+
+
+volumes:
+  prometheus:
+  grafana_var:

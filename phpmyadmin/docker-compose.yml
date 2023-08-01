@@ -1,0 +1,39 @@
+version: "2.1"
+services:
+  mariadb:
+    image: linuxserver/mariadb:latest
+    #container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=bitnami
+      - TZ=Europe/Berlin
+      #- MYSQL_DATABASE=USER_DB_NAME #optional
+      #- MYSQL_USER=MYSQL_USER #optional
+      #- MYSQL_PASSWORD=DATABASE_PASSWORD #optional
+      #- REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - /volume1/docker/phpmyadmin/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: always
+  phpmyadmin:
+    image: linuxserver/phpmyadmin:latest
+    #container_name: phpmyadmin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - PMA_ARBITRARY=0 #optional
+      - PMA_HOST=mariadb
+      #- PMA_ABSOLUTE_URI=https://phpmyadmin.example.com #optional
+    volumes:
+      - /volume1/docker/phpmyadmin/phpmyadmin/config:/config
+    ports:
+      - 8080:80
+      - 8443:443
+    restart: always
+    depends_on:
+      - mariadb
+
+

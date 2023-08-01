@@ -1,0 +1,36 @@
+version: "2.1"
+services:
+  mariadb:
+    image: linuxserver/mariadb:latest
+    #container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=bitnami
+      - TZ=Europe/Berlin
+      - MYSQL_DATABASE=wp-wordpress #optional
+      - MYSQL_USER=wp-wordpress #optional
+      - MYSQL_PASSWORD=wp-wordpress1234 #optional
+      #- REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - /volume1/docker/wordpress/mariadb/config:/config
+    #ports:
+    #  - 3306:3306
+    restart: always
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+      - 8443:443
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: wp-wordpress
+      WORDPRESS_DB_PASSWORD: wp-wordpress1234
+      WORDPRESS_DB_NAME: wp-wordpress
+    volumes:
+      - /volume1/docker/wordpress/data:/var/www/html
+    depends_on:
+      - mariadb
+
+
