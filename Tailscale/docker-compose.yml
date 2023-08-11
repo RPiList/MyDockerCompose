@@ -1,11 +1,21 @@
-version: '3.3'
+version: '3.9'
 services:
-    tailscale:
-        container_name: tailscaled
-        volumes:
-            - /var/lib:/var/lib
-            - /dev/net/tun:/dev/net/tun
-        network_mode: host
-        environment:
-            - TS_AUTHKEY=<YOUR_KEY_HERE>
-        image: tailscale/tailscale
+  tailscale:
+    image: tailscale/tailscale
+    container_name: tailscaled
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - TS_HOSTNAME=HomeorServer
+      - TS_AUTHKEY=tskey-auth-CHANGE-ME
+      - TS_ROUTES=192.168.<IP>.0/24
+#      - TS_ACCEPT_DNS=true # Set to false for Pi-hole Docker setups
+      - TS_SOCKET=/var/run/tailscale/tailscaled.sock
+      - TS_EXTRA_ARGS=--accept-routes
+      - TS_STATE_DIR=/var/lib/tailscale
+    volumes:
+      - /volume1/docker/tailscale/data:/var/lib # Creates a tailscale directory under /data for persistence
+      - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    restart: unless-stopped
