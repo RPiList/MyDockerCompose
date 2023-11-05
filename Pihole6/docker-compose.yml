@@ -13,7 +13,6 @@ services:
       - "1122:80/tcp"
     environment:
       TZ: 'Europe/Berlin'
-      SKIPGRAVITYONBOOT: 'true'
       # WEBPASSWORD: 'set a secure password here or it will be random'
     # Volumes store your data between container upgrades
     volumes:
