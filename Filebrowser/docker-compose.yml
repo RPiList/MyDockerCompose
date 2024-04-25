@@ -1,0 +1,14 @@
+version: "3"
+services:
+  filebrowser:
+    image: hurlenko/filebrowser
+    ports:
+      - 8765:8080
+    volumes:
+      - /volume1/docker:/data
+      - /volume1/docker/filebrowser/CONFIG_DIR:/config
+    environment:
+      - PUID=0
+      - PGID=0
+      - FB_BASEURL=/data
+    restart: always   
