@@ -1,0 +1,14 @@
+name: filebrowser
+services:
+    filebrowser:
+        volumes:
+            - /volume1/docker/:/srv
+            - /volume1/docker/filebrowser/filebrowser.db:/database/filebrowser.db
+            - /volume1/docker/filebrowser/settings.json:/config/settings.json
+        environment:
+            - PUID=0
+            - PGID=0
+        ports:
+            - 8765:80
+        image: filebrowser/filebrowser:s6
+        restart: always   
