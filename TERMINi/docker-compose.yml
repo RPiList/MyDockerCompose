@@ -1,0 +1,11 @@
+services:
+  termini:
+    image: sempervideo/termini:latest
+    container_name: termini
+    restart: unless-stopped
+    ports:
+      - "7676:7676"
+    volumes:
+      - /volume1/docker/termini/data:/app/data
+    environment:
+      TZ: Europe/Berlin
