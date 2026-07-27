@@ -7,5 +7,6 @@ services:
       - "7676:7676"
     volumes:
       - /volume1/docker/termini/data:/app/data
+      - /volume1/docker/termini/plugins:/app/plugins
     environment:
       TZ: Europe/Berlin
