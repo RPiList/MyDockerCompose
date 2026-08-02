@@ -1,0 +1,13 @@
+services:
+  http-honeypot:
+    image: sempervideo/http-honeypot:latest
+    pull_policy: always
+    container_name: easy-http-honeypot
+    restart: on-failure:5
+    ports:
+      - "4040:4040"
+      - "7979:7979"
+    volumes:
+      - /volume1/docker/http-honeypot/data:/data
+    environment:
+      TZ: Europe/Berlin
