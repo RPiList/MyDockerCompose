@@ -1,0 +1,11 @@
+services:
+  flighttracker:
+    image: sempervideo/flighttracker:latest
+    container_name: flighttracker
+    restart: unless-stopped
+    ports:
+      - "4142:4142"
+    volumes:
+      - /volume1/docker/flighttracker/data:/app/data
+    environment:
+      - TZ=Europe/Berlin
