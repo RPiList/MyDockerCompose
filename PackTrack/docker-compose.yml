@@ -1,0 +1,11 @@
+services:
+  packtrack:
+    image: sempervideo/packtrack:amd64
+    container_name: packtrack
+    restart: unless-stopped
+    ports:
+      - "4143:4143"
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - /volume1/docker/packtrack/data:/app/data
