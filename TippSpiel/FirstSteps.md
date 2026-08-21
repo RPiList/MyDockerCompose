@@ -1,3 +1,6 @@
+Bundesliga 2026/2027 already preconfigured and ready to use.
+
+
 1. Open your app.
 2. Click on Token Anmeldung <img width="429" height="476" alt="image" src="https://github.com/user-attachments/assets/bdfb31b8-e9c7-4d24-88bf-a486198376f9" />
 3. Type in "admin"
