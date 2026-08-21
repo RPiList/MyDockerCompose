@@ -1,0 +1,13 @@
+services:
+  tippspiel:
+    image: docker.io/sempervideo/tippspiel:latest
+    container_name: tippspiel
+    restart: unless-stopped
+    ports:
+      - "9696:9696"
+    volumes:
+      - /volume1/docker/tippspiel/tippspiel-data:/data
+
+volumes:
+  tippspiel-data:
+    name: tippspiel-data
