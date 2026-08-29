@@ -1,6 +1,6 @@
 services:
   packtrack:
-    image: sempervideo/packtrack:amd64
+    image: sempervideo/packtrack:latest
     container_name: packtrack
     restart: unless-stopped
     ports:
